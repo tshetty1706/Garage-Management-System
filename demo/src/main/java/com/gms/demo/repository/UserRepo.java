@@ -1,0 +1,12 @@
+package com.gms.demo.repository;
+
+import com.gms.demo.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepo extends JpaRepository<User,Integer> {
+    User findByEmailOrUsername(String email, String username);
+
+    User findByUsername(String username);
+}

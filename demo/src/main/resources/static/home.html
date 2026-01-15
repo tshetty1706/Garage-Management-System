@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Garage Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #1a1a1a;
+            border-bottom: 2px solid #ff9800;
+            flex-wrap: wrap
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9800;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ccc;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff9800;
+        }
+
+        .auth-buttons button {
+            padding: 8px 22px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 6px;
+        }
+
+        .auth-buttons .signup {
+            background-color: #ff9800;
+            color: #000;
+        }
+
+        /* HERO */
+        .hero {
+            height: 85vh;
+            background: linear-gradient(
+                rgba(0,0,0,0.7),
+                rgba(0,0,0,0.7)
+            ), url('https://images.unsplash.com/photo-1515922077200-9a6b6f44c2b0') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            padding-left: 60px;
+        }
+
+        .hero-content {
+            max-width: 500px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .hero-content button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #ff9800;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* FEATURES */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 60px 40px;
+            background-color: #141414;
+        }
+
+        .feature-card {
+            background-color: #1f1f1f;
+            padding: 25px;
+            width: 280px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #bbb;
+        }
+
+        /*CONTACT*/
+        #contact{
+            text-align: center;
+            padding: 60px 30px;
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 20px;
+        }
+
+
+        .contact-card {
+            background-color: #1f1f1f;
+            padding: 25px;
+            width: 280px;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .contact-card i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff9800;
+        }
+
+        .contact-card p {
+            color: #bbb;
+        }
+
+        .time {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            font-size: 20px;
+            align-items: center; /* vertically center icon and text */
+            flex-wrap: nowrap;   /* keep items on one line */
+            margin-bottom: 20px;
+        }
+
+        .time p {
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #1a1a1a;
+            color: #777;
+        }
+
+        @media (max-width: 800px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">GMS</div>
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Buy Cars</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+        <button onclick="goToLogin()">Login</button>
+        <button class="signup" onclick="goToSignup()">Sign Up</button>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Your Trusted Garage Partner</h1>
+        <p>Manage vehicle services, maintenance, and explore certified second-hand cars.</p>
+
+        <div class="time">
+            <i class="fa-solid fa-calendar-days"></i>
+            <p>MON-SAT: 9:00 AM - 7:00 PM</p>
+        </div>
+
+        <button onclick="goToSignup()">Get Started</button>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <div class="feature-card">
+        <h3>Service Booking</h3>
+        <p>Book vehicle services easily and track service status.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Vehicle Management</h3>
+        <p>Add and manage multiple vehicles under one account.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Buy Used Cars</h3>
+        <p>Browse admin-verified second-hand cars with seller contact.</p>
+    </div>
+</section>
+
+<!--Contact-->
+<section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-container">
+        <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <p>contact@garagemanagement.com</p>
+        </div>
+
+        <div class="contact-card">
+            <i class="fa-solid fa-phone"></i>
+            <p>Phone: +1 234 567 890</p>
+        </div>
+
+        <div class="contact-card">
+            <i class="fa-solid fa-location-dot"></i>
+            <p>Address: 123 GMS Garage, Mumbai, Maharashtra</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Garage Management System</p>
+</footer>
+</body>
+<script>
+    function goToLogin() {
+    // Later map this to Spring Boot endpoint
+    window.location.href = "/login.html";
+}
+
+function goToSignup() {
+    // Later map this to Spring Boot endpoint
+    window.location.href = "/signup.html";
+}
+
+</script>
+</html>

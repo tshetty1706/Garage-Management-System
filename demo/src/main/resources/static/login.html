@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMS | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1c1c1c, #2c2c2c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff9800;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+        }
+
+        .btn:hover {
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .link a {
+            color: #ff5722;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .message.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>GMS</h1>
+        <p>Garage Management System</p>
+    </div>
+
+    <div class="content">
+        <h2 style="text-align:center;margin-bottom:25px;">Login</h2>
+
+        <div id="loginMessage" class="message"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUsername" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <div class="link">
+            Don’t have an account? <a href="signup.html">Sign Up</a>
+        </div>
+        <div class="link">
+            <a href="home.html">← Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8081";
+
+    function showMessage(message, type) {
+        const el = document.getElementById("loginMessage");
+        el.innerText = message;
+        el.className = "message " + type + " show";
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const loginData = {
+            username: document.getElementById("loginUsername").value.trim(),
+            password: document.getElementById("loginPassword").value
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(loginData)
+            });
+
+            // expected JSON → { userId, role }
+            const data = await response.json();
+
+            // safety check
+            if (!data.userId || !data.role) {
+                showMessage("Invalid username or password", "error");
+                return;
+            }
+
+            // store session info
+            localStorage.clear();
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("role", data.role);
+
+            showMessage("Login successful! Redirecting...", "success");
+
+            setTimeout(() => {
+                if (data.role.toUpperCase() === "ADMIN") {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "user_dashboard.html";
+                }
+            }, 800);
+
+        } catch (err) {
+            console.error(err);
+            showMessage("Server error. Please try again.", "error");
+        }
+    });
+</script>
+</body>
+</html>
