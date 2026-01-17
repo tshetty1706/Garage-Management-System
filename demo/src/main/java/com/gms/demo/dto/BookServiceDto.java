@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class detailsDto {
-    String userName;
-    int vehicleCount;
+public class BookServiceDto {
+
+    int userId;
+    int vehicleId;
+    String serviceType;
+    double price;
+
 }

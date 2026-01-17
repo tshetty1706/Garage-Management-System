@@ -8,41 +8,33 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Vehicle {
+public class ServiceBooking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int vehicleId;  //pk
+    int bookingId;
 
     @Column(nullable = false)
-    int userId; //fk  the owner of vehicle
-
-    @Column(nullable = false,unique = true)
-    String vehicleNumber;
+    int userId;
 
     @Column(nullable = false)
-    String vehicleType; //car,bike,scooter,
+    int vehicleId;
 
     @Column(nullable = false)
-    String brand; //Honda, Hyundai, Tata, Suzuki
+    String serviceType; //(general, oil, brake…)
 
     @Column(nullable = false)
-    String model; //City, i20, Nexon
-
-    @Column(nullable = false)
-    String fuelType; //Petrol, Diesel ,Electric,CNG (drop down)
-
-    @Column(nullable = false)
-    String manufactureYear;
-
+    double price;
 
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
-    LocalDateTime createdAt;
+    LocalDateTime bookDate;
 
+    @Column(nullable = false)
+    String status; //(PENDING / COMPLETED / CANCELLED);
 }

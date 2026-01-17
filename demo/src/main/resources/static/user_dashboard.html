@@ -332,23 +332,23 @@
       <span>Here’s what’s happening with your vehicles</span>
     </div>
 
-    <div class="stats">
-      <div class="stat-card">
-        <h4>Active Services</h4>
-        <strong>None</strong>
+      <div class="stats">
+          <div class="stat-card">
+              <h4>Active Services</h4>
+              <strong id="activeServices">—</strong>
+          </div>
+          <div class="stat-card">
+              <h4>My Vehicles</h4>
+              <strong id="vehicleCount">—</strong>
+          </div>
+          <div class="stat-card">
+              <h4>Last Service</h4>
+              <strong id="lastService">—</strong>
+          </div>
       </div>
-      <div class="stat-card">
-        <h4>My Vehicles</h4>
-        <strong></strong>
-      </div>
-      <div class="stat-card">
-        <h4>Last Service</h4>
-        <strong></strong>
-      </div>
-    </div>
 
     <div class="actions">
-      <button class="action-btn">Book a New Service</button>
+      <button class="action-btn" onclick="bookService()">Book a New Service</button>
       <button class="action-btn" onclick="openAddVehicle()">➕ Add Vehicle</button>
     </div>
   </div>
@@ -449,31 +449,75 @@
   }
 
   // Fetch username using userId
-  fetch(`${API_URL}/api/users/${userId}`)
-.then(response => {
-  if (!response.ok) {
-    throw new Error("Failed to fetch user");
-  }
-    return response.text(); // IMPORTANT CHANGE
+//  fetch(`${API_URL}/api/users/${userId}`)-->
+//.then(response => {-->
+//  if (!response.ok) {-->
+//    throw new Error("Failed to fetch user");-->
+//  }-->
+//    -->
+//  })-->
+//  .then(username => {-->
+//    document.getElementById("welcomeUser").innerText = username;-->
+//  })-->
+//  .catch(err => {-->
+//    console.error(err);-->
+//    document.getElementById("welcomeUser").innerText = "User";-->
+//  });-->
+
+
+//  function show(id, el) {-->
+//    document.querySelectorAll(".section")-->
+//      .forEach(s => s.classList.remove("active"));-->
+//    document.getElementById(id).classList.add("active");-->
+
+//    document.querySelectorAll(".nav-item")-->
+//      .forEach(n => n.classList.remove("active"));-->
+//      el.classList.add("active");-->
+//  }
+
+    function loadDashboard(){
+        fetch(`${API_URL}/api/users/${userId}`)
+  .then(res => {
+    if (!res.ok) throw new Error("Failed to fetch dashboard details");
+    return res.json();
   })
-  .then(username => {
-    document.getElementById("welcomeUser").innerText = username;
+  .then(data => {
+
+    // Username
+    document.getElementById("welcomeUser").innerText =
+      data.userName || "User";
+
+    // Active Services
+    document.getElementById("activeServices").innerText =
+      data.activeServiceCount > 0
+        ? data.activeServiceCount
+        : "None";
+
+    // Vehicle Count
+    document.getElementById("vehicleCount").innerText =
+      data.vehicleCount ?? "0";
+
+    // Last Service
+    if (data.lastServiceType && data.vehicleNumber) {
+      document.getElementById("lastService").innerText =
+        `${data.lastServiceType} • ${data.vehicleNumber}`;
+    } else {
+      document.getElementById("lastService").innerText =
+        "No service history";
+    }
+
   })
   .catch(err => {
     console.error(err);
-    document.getElementById("welcomeUser").innerText = "User";
   });
+    }
 
 
-  function show(id, el) {
-    document.querySelectorAll(".section")
-      .forEach(s => s.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-
-    document.querySelectorAll(".nav-item")
-      .forEach(n => n.classList.remove("active"));
-      el.classList.add("active");
-  }
+    // Safe fallback UI
+    document.getElementById("welcomeUser").innerText = "User";
+    document.getElementById("activeServices").innerText = "—";
+    document.getElementById("vehicleCount").innerText = "—";
+    document.getElementById("lastService").innerText = "—";
 
 
 
@@ -547,7 +591,8 @@
 
         setTimeout(() => {
           closeAddVehicle();
-        }, 1200);
+          loadDashboard();
+        }, 800);
 
 
       } catch (err) {
@@ -555,8 +600,12 @@
       }
     });
 
+    //this is the new line I now added
+  function bookService() {
+    window.location.href = `book_service.html?userId=${userId}`;
+  }
 
-
+    loadDashboard();
   function logout() {
     localStorage.clear();
     window.location.href = "login.html";

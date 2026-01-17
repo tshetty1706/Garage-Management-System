@@ -1,13 +1,18 @@
 package com.gms.demo.controller;
 
 import com.gms.demo.dto.CheckLogin;
+import com.gms.demo.dto.DetailsDto;
 import com.gms.demo.dto.LoginDto;
+import com.gms.demo.model.ServiceBooking;
 import com.gms.demo.model.User;
 import com.gms.demo.model.Vehicle;
+import com.gms.demo.repository.BookingRepo;
 import com.gms.demo.repository.UserRepo;
 import com.gms.demo.repository.VehicleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Book;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,6 +23,9 @@ public class UserController {
 
     @Autowired
     VehicleRepo vehicleRepo;
+
+    @Autowired
+    BookingRepo bookingRepo;
 
     @PostMapping("/register")
     public String register(@RequestBody User user)
@@ -48,10 +56,34 @@ public class UserController {
     }
 
     @GetMapping("/api/users/{id}")
-    public String details(@PathVariable int id)
+    public DetailsDto details(@PathVariable int id)
     {
+        DetailsDto detailsDto = new DetailsDto();
         User user =  userRepo.findById(id).orElseThrow(()->new RuntimeException("User not found"));
-        return user.getUsername();
+
+        int activeServiceCount = bookingRepo.countByUserIdAndStatus(id,"PENDING");
+        int vehicleCount = vehicleRepo.countByUserId(id);
+        ServiceBooking serviceBooking = bookingRepo.findTopByUserIdAndStatusOrderByBookDateDesc(id, "COMPLETED");
+
+
+        detailsDto.setUserName(user.getUsername());
+        detailsDto.setVehicleCount(vehicleCount);
+        detailsDto.setActiveServiceCount(activeServiceCount);
+
+        if(serviceBooking !=null)
+        {
+            detailsDto.setLastServiceType(serviceBooking.getServiceType());
+            detailsDto.setDate(serviceBooking.getBookDate());
+
+            Vehicle vehicle = vehicleRepo.findByVehicleId(serviceBooking.getVehicleId());
+            if(vehicle != null)
+            {
+                detailsDto.setVehicleNumber(vehicle.getVehicleNumber());
+            }
+        }
+
+
+        return detailsDto;
     }
 
     @PostMapping("/vehicles")
