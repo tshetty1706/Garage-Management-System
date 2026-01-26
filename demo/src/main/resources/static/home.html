@@ -22,79 +22,191 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
-            background-color: #1a1a1a;
-            border-bottom: 2px solid #ff9800;
+            padding: 18px 48px;
+            background: linear-gradient(100deg, #1e1e1e, #141414);
+            border-bottom: 2px solid #2a2a2a;
             flex-wrap: wrap
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size: 28px;
+            font-weight: 1000;
             color: #ff9800;
+            letter-spacing:0.5px;
+        }
+
+
+        .logo-icon {
+            position: relative;
+            width: 34px;
+            height: 34px;
+        }
+
+        /* gear */
+        .logo-icon .gear {
+            font-size: 38px;
+            color: #ff9800;
+        }
+
+        /* wrench */
+        .logo-icon .wrench {
+            position: absolute;
+            font-size: 34px;
+            color: white;
+            left: 9px;
+            top: 9px;
+            transform: rotate(-84deg);
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 28px;
         }
 
-        .nav-links a {
+        .nav-links li a {
             text-decoration: none;
-            color: #ccc;
-            transition: 0.3s;
+            color: #bdbdbd;
+            font-size: 16px;
+            font-weight: 500;
+            padding-bottom: 4px;
+            transition: color 0.25s ease, border-color 0.25s ease;
+            border-bottom: 2px solid transparent;
         }
 
         .nav-links a:hover {
             color: #ff9800;
+            border-bottom: 2px solid #ff9800;
+        }
+
+        .auth-buttons{
+            display: flex;
+            gap: 12px;
         }
 
         .auth-buttons button {
-            padding: 8px 22px;
-            border: none;
+            padding: 6px 18px;
+            font-size: 16px;
+            border: 2px solid #555;
             cursor: pointer;
+            background: transparent;
+            color:#e0e0e0;
             margin-left: 10px;
             border-radius: 6px;
+            transition: all 0.25s ease;
+        }
+
+        .auth-buttons button:hover{
+            border-color: #ff9800;
+            color: #ff9800;
         }
 
         .auth-buttons .signup {
-            background-color: #ff9800;
-            color: #000;
+            background: #ff9800;
+            color: #111;
+            border: none;
+            font-weight:600;
         }
 
-        /* HERO */
+        .auth-buttons .signup:hover {
+            background: #ffa733;
+            color: #111;
+        }
+
+        /* ===== HERO (HOME SECTION) ===== */
         .hero {
-            height: 85vh;
-            background: linear-gradient(
-                rgba(0,0,0,0.7),
-                rgba(0,0,0,0.7)
-            ), url('https://images.unsplash.com/photo-1515922077200-9a6b6f44c2b0') center/cover no-repeat;
+        height: calc(100vh - 90px);
+
+        background:
+            linear-gradient(
+                to right,
+                rgba(10,10,10,0.96) 0%,
+                rgba(10,10,10,0.92) 30%,
+                rgba(10,10,10,0.75) 45%,
+                rgba(10,10,10,0.55) 55%,
+                rgba(10,10,10,0.30) 65%,
+                rgba(10,10,10,0.15) 75%,
+                rgba(10,10,10,0.05) 85%,
+                rgba(10,10,10,0.00) 100%
+            ),
+            url("home.jfif") right 40% / cover no-repeat;
+
+        display: flex;
+        align-items: center;
+        padding-left: 80px;
+    }
+
+
+
+        /* Content wrapper */
+        .hero-content {
+            max-width: 520px;
+        }
+
+        /* Heading */
+        .hero-content h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        /* Description */
+        .hero-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #d0d0d0;
+            margin-bottom: 26px;
+        }
+
+        /* Time row */
+        .time {
             display: flex;
             align-items: center;
-            padding-left: 60px;
+            gap: 10px;
+            font-size: 15px;
+            color: #e0e0e0;
+            margin-bottom: 28px;
         }
 
-        .hero-content {
-            max-width: 500px;
+        .time i {
+            color: #ff9800;
+            font-size: 18px;
         }
 
-        .hero-content h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .hero-content p {
-            color: #ccc;
-            margin-bottom: 25px;
-        }
-
+        /* CTA button */
         .hero-content button {
-            padding: 12px 25px;
-            font-size: 16px;
-            background-color: #ff9800;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            background: #ff9800;
+            color: #111;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .hero-content button:hover {
+            background: #ffa733;
+            transform: translateY(-1px);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                padding-left: 40px;
+                background-position: center;
+            }
+
+            .hero-content h1 {
+                font-size: 40px;
+            }
         }
 
         /* FEATURES */
@@ -103,28 +215,65 @@
             justify-content: center;
             gap: 30px;
             padding: 60px 40px;
-            background-color: #141414;
+            background: transparent;
         }
 
         .feature-card {
             background-color: #1f1f1f;
-            padding: 25px;
+            padding: 22px 22px 24px;
             width: 280px;
-            border-left: 4px solid #ff9800;
+            background: linear-gradient(
+                145deg,
+                #22282d,
+                #1b2025
+            );
+            border: 1px solid #2f363d;
+            border-radius: 14px;
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.04);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 18px 45px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        /* icon */
+        .feature-card i {
+            font-size: 28px;
+            color: #ff9800;
+            margin-bottom: 14px;
+            display: inline-block;
         }
 
         .feature-card h3 {
             margin-bottom: 10px;
+            font-size: 17px;
+            font-weight: 600;
+            color:#ffffff;
         }
 
         .feature-card p {
-            color: #bbb;
+            color: #b8bfc6;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         /*CONTACT*/
         #contact{
             text-align: center;
-            padding: 60px 30px;
+            padding: 80px 30px 90px;
+            background: radial-gradient(circle at top,#161616 0%,#0f0f0f 65%);
+        }
+
+        #contact h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 45px;
+            color: #ffffff;
         }
 
         .contact-container {
@@ -132,25 +281,49 @@
             justify-content: center;
             gap: 30px;
             padding: 40px 20px;
+            flex-wrap:wrap;
         }
 
 
         .contact-card {
-            background-color: #1f1f1f;
-            padding: 25px;
-            width: 280px;
+            width: 300px;
+            padding: 26px 24px 28px;
+            background: linear-gradient(
+                145deg,
+                #232323,
+                #1a1a1a
+            );
+            border: 1px solid #2c2c2c;
+            border-radius: 14px;
             text-align: center;
-            border-radius: 6px;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.04);
+
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 18px 50px rgba(0,0,0,0.65),
+                inset 0 1px 0 rgba(255,255,255,0.06);
         }
 
         .contact-card i {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            margin-bottom: 14px;
             color: #ff9800;
+            display:inline-block;
         }
 
         .contact-card p {
-            color: #bbb;
+            font-size: 15px;
+            color: #c9c9c9;
+            line-height: 1.5;
+            word-break: break-word;
         }
 
         .time {
@@ -199,10 +372,16 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
-    <div class="logo">GMS</div>
+    <div class="logo">
+        <span class="logo-icon">
+            <i class="fa-solid fa-gear gear"></i>
+            <i class="fa-solid fa-wrench wrench"></i>
+        </span>
+        GMS
+    </div>
     <ul class="nav-links">
         <li><a href="#">Home</a></li>
-        <li><a href="#">Services</a></li>
+        <li><a href="./book_service.html">Services</a></li>
         <li><a href="#">Buy Cars</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
@@ -230,14 +409,18 @@
 <!-- FEATURES -->
 <section class="features">
     <div class="feature-card">
+        <i class="fa-solid fa-calendar-check"></i>
         <h3>Service Booking</h3>
         <p>Book vehicle services easily and track service status.</p>
     </div>
     <div class="feature-card">
+        <i class="fa-solid fa-bars-progress"></i>
         <h3>Vehicle Management</h3>
         <p>Add and manage multiple vehicles under one account.</p>
     </div>
     <div class="feature-card">
+
+        <i class="fa-solid fa-car"></i>
         <h3>Buy Used Cars</h3>
         <p>Browse admin-verified second-hand cars with seller contact.</p>
     </div>
@@ -272,7 +455,22 @@
 <script>
     function goToLogin() {
     // Later map this to Spring Boot endpoint
-    window.location.href = "/login.html";
+
+    const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("role");
+
+    console.log("userId:", userId);
+    console.log("role:", role);
+
+      if (userId && role) {
+        if (role.toUpperCase() === "ADMIN") {
+          window.location.replace("admin.html");
+        } else {
+          window.location.replace("user_dashboard.html");
+        }
+      }else{
+        window.location.href = "/login.html";
+      }
 }
 
 function goToSignup() {

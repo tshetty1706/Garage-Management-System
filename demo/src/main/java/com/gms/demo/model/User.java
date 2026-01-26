@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Data
@@ -25,6 +24,8 @@ public class User {
 
     @Column(nullable = false,unique = true)
     String email;
+
+    String phone;
 
     @Column(nullable = false)
     String password;

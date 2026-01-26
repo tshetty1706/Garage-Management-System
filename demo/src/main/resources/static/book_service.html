@@ -151,20 +151,7 @@
           padding: 16px 40px;
         }*/
 
-        .dashboard-btn {
-          background: transparent;
-          border: 1px solid #ff9800;
-          color: #ff9800;
-          padding: 8px 18px;
-          border-radius: 8px;
-          font-weight: 600;
-          cursor: pointer;
-        }
 
-        .dashboard-btn:hover {
-          background: #ff9800;
-          color: #111;
-        }
 
         /* ===== HERO SECTION ===== */
         .hero {
@@ -182,20 +169,7 @@
           object-fit: cover;
         }
 
-        .dashboard-btn {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          z-index: 3;
 
-          background: rgba(0,0,0,0.6);
-          border: 1px solid #ff9800;
-          color: #ff9800;
-          padding: 8px 18px;
-          border-radius: 8px;
-          font-weight: 600;
-          cursor: pointer;
-        }
 
         .dashboard-btn:hover {
           background: #ff9800;
@@ -225,6 +199,26 @@
           font-size: 16px;
         }
 
+
+        .dashboard-btn {
+          position: absolute;
+          z-index: 3;
+          background: rgba(0,0,0,0.6);
+          border: 1px solid #ff9800;
+          color: #ff9800;
+          padding: 8px 18px;
+          border-radius: 8px;
+          font-weight: 600;
+          cursor: pointer;
+          display: none;
+        }
+
+        #dashboardBtn { top: 20px; right: 20px; }
+        #loginBtn     { top: 20px; right: 130px; }
+        #signupBtn    { top: 20px; right: 240px; }
+
+
+
     </style>
 </head>
 
@@ -233,7 +227,10 @@
 <div class="hero">
     <img src="img.png" alt="Car Service">
 
-    <button class="dashboard-btn" onclick="goToDashboard()">Dashboard</button>
+    <button id="dashboardBtn" class="dashboard-btn" onclick="goToDashboard()">Dashboard</button>
+    <button id="loginBtn" class="dashboard-btn" onclick="goToLogin()">Sign In</button>
+    <button id="signupBtn" class="dashboard-btn" onclick="goToSignup()">Sign Up</button>
+
 
     <div class="hero-overlay">
         <h1>Book a New Service</h1>
@@ -386,10 +383,33 @@
 <script>
     const API_URL = "http://localhost:8081";
     const userId = localStorage.getItem("userId");
+    const isLoggedIn = !!userId;
 
-    if (!userId) {
-      window.location.href = "login.html";
-    }
+    const dashboardBtn = document.getElementById("dashboardBtn");
+    const loginBtn = document.getElementById("loginBtn");
+    const signupBtn = document.getElementById("signupBtn");
+    const bookBtn = document.getElementById("bookServiceBtn");
+
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (isLoggedIn) {
+        dashboardBtn.style.display = "block";
+        loginBtn.style.display = "none";
+        signupBtn.style.display = "none";
+        loadUserVehicles();
+      } else {
+        dashboardBtn.style.display = "none";
+        loginBtn.style.display = "block";
+        signupBtn.style.display = "block";
+        bookBtn.style.opacity = "0.6";
+        vehicleSelect.disabled = true;
+        vehicleSelect.style.opacity = "0.6";
+      }
+    });
+
+
+
+
 
 
     let selectedServiceType = null;
@@ -400,14 +420,32 @@
     const vehicleSelect = document.getElementById("vehicleSelect");
     const messageBox = document.getElementById("messageBox");
 
+    if (!isLoggedIn) {
+      vehicleSelect.disabled = true;
+      vehicleSelect.style.opacity = "0.6";
+    }
+
     vehicleSelect.addEventListener("change", () => {
+      if (!isLoggedIn) {
+        vehicleSelect.value = "";
+        requireLogin("select a vehicle");
+        return;
+      }
+
       selectedVehicleId = vehicleSelect.value;
     });
 
 
 
+
     cards.forEach(card => {
       card.addEventListener("click", () => {
+
+        if (!isLoggedIn) {
+          requireLogin("select a service");
+          return;
+        }
+
 
         cards.forEach(c => c.classList.remove("selected"));
         card.classList.add("selected");
@@ -435,14 +473,13 @@
         const res = await fetch(`${API_URL}/vehicles/user/${userId}`);
         const vehicles = await res.json();
 
-        const select = document.getElementById("vehicleSelect");
-        select.innerHTML = `<option value="">-- Select Vehicle --</option>`;
+        vehicleSelect.innerHTML = `<option value="">-- Select Vehicle --</option>`;
 
         vehicles.forEach(v => {
           const option = document.createElement("option");
           option.value = v.vehicleId;
           option.textContent = `${v.brand} ${v.model} (${v.vehicleNumber})`;
-          select.appendChild(option);
+          vehicleSelect.appendChild(option);
         });
 
       } catch (err) {
@@ -450,13 +487,15 @@
       }
     }
 
-    //vehicleSelect.addEventListener("change", () => {
-      //console.log("Vehicle selected:", vehicleSelect.value);
-    //});
-
     console.log("Booking vehicle:", vehicleSelect.value);
 
     document.getElementById("bookServiceBtn").addEventListener("click", async () => {
+
+        if (!isLoggedIn) {
+          requireLogin("book a service");
+          return;
+        }
+
 
       //const selectedVehicleId = document.getElementById("vehicleSelect").value;
 
@@ -523,10 +562,30 @@
       }
     });
 
+    function requireLogin(action = "continue") {
+      showMessage(`Please sign in to ${action}.`, "error");
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    }
 
 
+    function goToLogin() {
+      window.location.href = "login.html";
+    }
 
-    window.addEventListener("DOMContentLoaded", loadUserVehicles);
+    function goToSignup() {
+      window.location.href = "signup.html";
+    }
+
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (isLoggedIn) {
+        loadUserVehicles();
+      }
+    });
+
 
     function showMessage(text, type) {
       messageBox.innerText = text;

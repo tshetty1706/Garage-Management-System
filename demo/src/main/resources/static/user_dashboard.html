@@ -5,6 +5,15 @@
   <title>GMS | Customer Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
+
+
   <style>
     * {
       margin: 0;
@@ -49,11 +58,26 @@
       margin-bottom: 8px;
       cursor: pointer;
       color: #9e9e9e;
+      gap:12px;
+      font-size:15px;
+      transition:background 0.25s ease, color 0.25s ease;
+    }
+
+    .nav-item i{
+      width: 18px;
+      text-align:center;
+      font-size:16px;
+      color:#7d7d7d;
     }
 
     .nav-item.active,
     .nav-item:hover {
       background: #1c1c1c;
+      color: #ff9800;
+    }
+
+    .nav-item.active i,
+    .nav-item:hover i{
       color: #ff9800;
     }
 
@@ -63,11 +87,22 @@
       cursor: pointer;
       padding: 12px 14px;
       border-radius: 10px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      transition: background 0.25s ease , color 0.25s ease;
     }
+
+
+     .logout i{
+        width:18px;
+        text-align:center;
+        font-size:16px;
+     }
 
     .logout:hover {
       background: #1c1c1c;
-      color: #ff5722;
+      color: #ff5c5c;
     }
 
     /* ===== MAIN ===== */
@@ -83,17 +118,82 @@
 
     /* ===== HEADER ===== */
     .header {
-      margin-bottom: 30px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+
+    .header i{
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 16px;
+      background: rgba(255, 152, 0, 0.12);
+      color: #ff9800;
     }
 
     .header h1 {
+      max-width:90vw;
       font-size: 28px;
-      margin-bottom: 6px;
+      margin:0;
     }
 
     .header span {
+
       color: #9e9e9e;
     }
+
+
+    .section.active .header i {
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+
+    .header-column {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .header-column h1 {
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .username {
+      color: #ff9800;
+      font-weight: 800;
+      word-break: break-word;
+      text-shadow: 0 0 8px rgba(255, 152, 0, 0.25);
+      overflow:hidden;
+      max-width:260px;
+      text-overflow:ellipsis;
+    }
+
+
+
+    .subtitle {
+      color: #9e9e9e;
+      font-size: 14px;
+    }
+
 
     /* ===== STATS ===== */
     .stats {
@@ -121,6 +221,13 @@
       color: #ff9800;
     }
 
+    .stat-card i {
+      font-size: 18px;
+      color: #ff9800;
+      margin-bottom: 8px;
+      display: block;
+    }
+
     /* ===== ACTION BUTTONS ===== */
     .actions {
       display: flex;
@@ -128,19 +235,34 @@
     }
 
     .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
       flex: 1;
       padding: 16px;
       border-radius: 14px;
       border: 1px solid #ff9800;
       background: transparent;
       color: #ff9800;
+
       font-size: 15px;
+      font-weight: 500;
       cursor: pointer;
+
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .action-btn i {
+      font-size: 16px;
     }
 
     .action-btn:hover {
       background: rgba(255, 152, 0, 0.08);
+      transform: translateY(-1px);
     }
+
 
     /* ===== VEHICLES ===== */
     .vehicle-grid {
@@ -268,40 +390,120 @@
     }
 
 
+    /* ===== TOP MESSAGE BAR ===== */
+    .top-message {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      min-width: 280px;
+      max-width: 420px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+      z-index: 2000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      animation: slideIn 0.3s ease;
+    }
+
+    .top-message.success {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.5);
+    }
+
+    .top-message.error {
+      background: rgba(255, 92, 92, 0.15);
+      color: #ff5c5c;
+      border: 1px solid rgba(255, 92, 92, 0.5);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-10px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
 
-    /* ===== RECENT ACTIVITY ===== */
-  .recent-activity {
-    margin-top: 40px;
-    background: #1c1c1c;
-    border: 1px solid #2a2a2a;
-    border-radius: 16px;
-    padding: 24px;
-  }
+    .activity-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
 
-  .recent-activity h3 {
-    font-size: 16px;
-    margin-bottom: 16px;
-    color: #e0e0e0;
-  }
+    .activity-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: rgba(255, 152, 0, 0.15);
+      color: #ff9800;
+      flex-shrink: 0;
+    }
 
-  .activity-empty {
-    text-align: center;
-    padding: 30px 10px;
-    color: #9e9e9e;
-  }
+    .activity-content span {
+      display: block;
+      line-height: 1.4;
+    }
 
-  .activity-empty span {
-    display: block;
-    font-size: 15px;
-    margin-bottom: 6px;
-  }
+    #profile input:disabled {
+      background:#161616;
+      border:1px solid #2a2a2a;
+      color:#aaa;
+      cursor:not-allowed;
+    }
 
-  .activity-empty p {
-    font-size: 13px;
-    color: #777;
-  }
+    #profile input {
+      width:100%;
+      padding:10px;
+      margin:6px 0 14px;
+      border-radius:8px;
+      background:#1c1c1c;
+      border:1px solid #333;
+      color:#fff;
+    }
 
+    #profile label {
+      font-size:13px;
+      color:#9e9e9e;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 1px solid #ff9800;
+      color: #ff9800;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 152, 0, 0.1);
+    }
+
+    .welcome{
+      display:inline-flex;
+      align-items:baseline;
+      gap:6px;
+      white-space:nowrap;
+    }
+
+    .welcome .username {
+      max-width: 260px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -312,84 +514,89 @@
   <div class="logo">GMS</div>
 
   <div class="nav">
-    <div class="nav-item active" onclick="show('dashboard', this)">Dashboard</div>
-    <div class="nav-item" onclick="show('garage', this)">My Garage</div>
-    <div class="nav-item">Book Service</div>
-    <div class="nav-item">Service History</div>
-    <div class="nav-item">Profile</div>
+    <div class="nav-item active" onclick="show('dashboard', this)">
+      <i class="fa-solid fa-table-columns"></i>
+      Dashboard
+    </div>
+    <div class="nav-item" onclick="show('garage', this)">
+      <i class="fa-solid fa-car"></i>
+      My Garage
+    </div>
+    <div class="nav-item" onclick="show('activity',this)">
+      <i class="fa-solid fa-chart-line"></i>
+      Activity
+    </div>
+    <div class="nav-item" onclick="show('profile',this)">
+      <i class="fa-regular fa-user"></i>
+      Profile
+    </div>
+    <div class="nav-item" onclick="home()">
+      <i class="fa-solid fa-house"></i>
+      Home
+    </div>
   </div>
 
-  <div class="logout" onclick="logout()">Logout</div>
+  <div class="logout" onclick="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+  </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
+  <div id="topMessage" class="top-message"></div>
 
   <!-- DASHBOARD -->
   <div id="dashboard" class="section active">
-    <div class="header">
-      <h1>Welcome back, <span id="welcomeUser">User</span>.</h1>
-      <span>Here’s what’s happening with your vehicles</span>
+    <div class="header header-column">
+      <h1 class="welcome" >
+        Welcome back,<span id="welcomeUser" class="username">User</span>
+      </h1>
+      <p class="subtitle">Here’s what’s happening with your vehicles</p>
     </div>
 
       <div class="stats">
           <div class="stat-card">
+              <i class="fa-solid fa-clipboard-list" style="color: #FFA500;"></i>
               <h4>Active Services</h4>
               <strong id="activeServices">—</strong>
           </div>
           <div class="stat-card">
+              <i class="fa-solid fa-car-side" style="color: #FFA500;"></i>
               <h4>My Vehicles</h4>
               <strong id="vehicleCount">—</strong>
           </div>
           <div class="stat-card">
+              <i class="fa-solid fa-screwdriver-wrench" style="color: #FFA500;"></i>
               <h4>Last Service</h4>
               <strong id="lastService">—</strong>
           </div>
       </div>
 
     <div class="actions">
-      <button class="action-btn" onclick="bookService()">Book a New Service</button>
-      <button class="action-btn" onclick="openAddVehicle()">➕ Add Vehicle</button>
+      <button class="action-btn" onclick="bookService()">
+        <i class="fa-regular fa-calendar-check"></i>
+        Book a New Service
+      </button>
+      <button class="action-btn" onclick="openAddVehicle()">
+        <i class="fa-solid fa-plus"></i>
+        Add Vehicle
+      </button>
     </div>
+
+
   </div>
-
-  <!-- RECENT ACTIVITY -->
-  <div class="recent-activity">
-    <h3>Recent Activity</h3>
-
-    <div class="activity-empty">
-      <span>No recent activities</span>
-      <p>Your recent services and updates will appear here.</p>
-    </div>
-  </div>
-
 
   <!-- GARAGE -->
   <div id="garage" class="section">
     <div class="header">
+      <i class="fa-solid fa-car"></i>
       <h1>My Vehicles</h1>
     </div>
 
-    <div class="vehicle-grid">
-      <div class="vehicle-card">
-        <h3>2021 Honda Civic</h3>
-        <span>ABC-123</span>
-        <div class="vehicle-actions">
-          <div class="edit">Edit</div>
-          <div class="delete">Delete</div>
-        </div>
-      </div>
-
-      <div class="vehicle-card">
-        <h3>2018 Ford F-150</h3>
-        <span>XYZ-999</span>
-        <div class="vehicle-actions">
-          <div class="edit">Edit</div>
-          <div class="delete">Delete</div>
-        </div>
-      </div>
-    </div>
+    <div id="garageGrid" class="vehicle-grid"></div>
   </div>
+
 
 
 
@@ -430,6 +637,181 @@
     </div>
   </div>
 
+  <div id="serviceHistory" class="section">
+    <div class="header" style="display:flex;align-items:center;gap:14px;">
+
+      <!-- BACK BUTTON -->
+      <button class="back-btn" onclick="goBackToGarage()">
+        ← Back
+      </button>
+
+      <div>
+        <h1>Service History</h1>
+        <span id="historyVehicle"></span>
+      </div>
+
+    </div>
+
+    <div id="historyList"></div>
+  </div>
+
+
+  <div id="activity" class="section">
+      <div class="header">
+        <i class="fa-solid fa-chart-line"></i>
+        <h1>Activity</h1>
+      </div>
+      <div class="header">
+        <span>Your recent actions and updates</span>
+      </div>
+      <br/>
+      <div id="activityList"></div>
+  </div>
+
+  <!-- EDIT VEHICLE MODAL -->
+  <div id="editVehicleModal" class="modal">
+    <div class="modal-content">
+      <h3>Edit Vehicle</h3>
+
+      <!-- Message box -->
+      <div id="editVehicleMessage" class="form-message"></div>
+
+      <form id="editVehicleForm">
+
+        <!-- Vehicle ID is hidden (PRIMARY KEY – must never be editable) -->
+        <input type="hidden" id="editVehicleId" />
+
+        <!-- Vehicle Number
+             Editable because users often enter wrong registration -->
+        <input
+                type="text"
+                id="editVehicleNumber"
+                placeholder="Vehicle Number"
+                required
+        />
+
+        <!-- Vehicle Type
+             Editable because user may have selected wrong type initially -->
+        <select id="editVehicleType" required>
+          <option value="">Vehicle Type</option>
+          <option value="CAR">Car</option>
+          <option value="BIKE">Bike</option>
+        </select>
+
+        <!-- Brand
+             Editable to fix typos or incomplete brand names -->
+        <input
+                type="text"
+                id="editBrand"
+                placeholder="Brand"
+                required
+        />
+
+        <!-- Model
+             Editable to update model variant or correct spelling -->
+        <input
+                type="text"
+                id="editModel"
+                placeholder="Model"
+                required
+        />
+
+        <!-- Manufacture Year
+             Editable for data correction -->
+        <input
+                type="number"
+                id="editManufactureYear"
+                placeholder="Manufacture Year"
+                min="1980"
+                max="2026"
+                required
+        />
+
+        <!-- Fuel Type
+             Editable because users frequently select wrong fuel -->
+        <select id="editFuelType" required>
+          <option value="">Fuel Type</option>
+          <option value="PETROL">Petrol</option>
+          <option value="DIESEL">Diesel</option>
+          <option value="ELECTRIC">Electric</option>
+          <option value="CNG">CNG</option>
+        </select>
+
+        <div class="modal-actions">
+          <button type="button" onclick="closeEditVehicle()">Cancel</button>
+          <button type="submit">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- PROFILE -->
+  <div id="profile" class="section">
+    <div class="header">
+      <i class="fa-regular fa-user"></i>
+      <h1>Profile</h1>
+    </div>
+    <div class="header">
+      <span>Your account information</span>
+    </div>
+    <br/>
+
+    <div class="stat-card" style="max-width:720px">
+
+      <!-- Overview -->
+      <div style="display:flex;gap:20px;align-items:center">
+        <div id="avatar"
+             style="width:64px;height:64px;border-radius:50%;
+           background:#ff9800;color:#111;
+           display:flex;align-items:center;justify-content:center;
+           font-size:22px;font-weight:700;">
+          U
+        </div>
+
+        <div>
+          <strong id="pName">—</strong><br/>
+          <span id="pEmail" style="color:#9e9e9e">—</span><br/>
+          <small id="pRole" style="color:#777">—</small>
+        </div>
+      </div>
+
+      <hr style="border:0;border-top:1px solid #2a2a2a;margin:20px 0"/>
+
+      <!-- Info -->
+      <p><strong>Username:</strong> <span id="pUsername">—</span></p>
+      <p><strong>Phone:</strong> <span id="pPhone">Not added</span></p>
+
+      <button class="action-btn" style="margin-top:20px"
+              onclick="openEditProfile()">
+        <i class="fa-solid fa-pen"></i> Edit Profile
+      </button>
+    </div>
+
+    <!-- EDIT OPTIONS -->
+    <div id="editProfileBox"
+         class="stat-card"
+         style="max-width:720px;margin-top:20px;display:none">
+
+      <h4 style="margin-bottom:14px">Update Profile</h4>
+
+      <select id="editOption" onchange="showEditField()">
+        <option value="">Select what to update</option>
+        <option value="name">Name</option>
+        <option value="phone">Phone Number</option>
+        <option value="password">Password</option>
+        <option value="email">Email</option>
+      </select>
+
+      <input id="editInput" style="display:none" />
+      <button class="action-btn" style="margin-top:14px"
+              onclick="saveProfileChange()">
+        Save
+      </button>
+    </div>
+  </div>
+
+
 
 </div>
 <script>
@@ -442,11 +824,6 @@
     window.location.href = "login.html";
   }
 
-
-  // Safety check: user not logged in
-  if (!userId) {
-    window.location.href = "login.html";
-  }
 
   // Fetch username using userId
 //  fetch(`${API_URL}/api/users/${userId}`)-->
@@ -464,16 +841,106 @@
 //    document.getElementById("welcomeUser").innerText = "User";-->
 //  });-->
 
+  function loadGarage() {
+  fetch(`${API_URL}/api/vehicles/user/${userId}`)
+    .then(res => res.json())
+    .then(vehicles => {
+      const grid = document.getElementById("garageGrid");
+      grid.innerHTML = "";
 
-//  function show(id, el) {-->
-//    document.querySelectorAll(".section")-->
-//      .forEach(s => s.classList.remove("active"));-->
-//    document.getElementById(id).classList.add("active");-->
+      if (vehicles.length === 0) {
+        grid.innerHTML = `<p style="color:#9e9e9e">No vehicles added yet</p>`;
+        return;
+      }
 
-//    document.querySelectorAll(".nav-item")-->
-//      .forEach(n => n.classList.remove("active"));-->
-//      el.classList.add("active");-->
-//  }
+      vehicles.forEach(v => {
+        grid.innerHTML += `
+          <div class="vehicle-card">
+            <h3>${v.brand} ${v.model}</h3>
+            <span>${v.vehicleNumber}</span><br>
+            <span>${v.vehicleType} • ${v.fuelType}</span><br>
+            <span>Year: ${v.manufactureYear}</span>
+
+            <div class="vehicle-actions">
+              <div class="edit" onclick="viewServiceHistory(${v.vehicleId}, '${v.vehicleNumber}')">
+                Service History
+              </div>
+              <div class="edit" onclick="openEditVehicle(${v.vehicleId})">
+                <i class="fa-solid fa-pen"></i> Edit
+              </div>
+              <div class="delete" onclick="deleteVehicle(${v.vehicleId})">Delete</div>
+            </div>
+          </div>
+        `;
+      });
+    });
+}
+  function viewServiceHistory(vehicleId, vehicleNumber) {
+  show("serviceHistory", null);
+
+  document.getElementById("historyVehicle").innerText =
+    `Vehicle: ${vehicleNumber}`;
+
+  fetch(`${API_URL}/api/service-history/vehicle/${vehicleId}`)
+    .then(res => res.json())
+    .then(history => {
+      const list = document.getElementById("historyList");
+      list.innerHTML = "";
+
+      if (history.length === 0) {
+        list.innerHTML = `<p style="color:#9e9e9e">No service history</p>`;
+        return;
+      }
+
+      history.forEach(s => {
+        list.innerHTML += `
+          <div class="stat-card">
+            <h4>${s.serviceType}</h4>
+            <strong>₹${s.price}</strong><br>
+            <span>Status: ${s.status}</span><br>
+            <span>${new Date(s.bookDate).toLocaleDateString()}</span>
+          </div>
+          <br/>
+        `;
+      });
+    });
+}
+
+
+function deleteVehicle(vehicleId) {
+  fetch(`${API_URL}/api/vehicles/${vehicleId}`, { method: "DELETE" })
+    .then(res => res.text())
+    .then(msg => {
+      if (msg.includes("active")) {
+        showTopMessage(msg, "error");
+      } else {
+        showTopMessage("Vehicle deleted successfully", "success");
+        loadGarage();
+      }
+
+    });
+
+}
+
+
+
+
+  function show(id, el) {
+    document.querySelectorAll(".section")
+      .forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".nav-item")
+      .forEach(n => n.classList.remove("active"));
+
+
+      if (el) el.classList.add("active");
+
+      if(id === "garage") loadGarage();
+
+      if (id === "activity") loadActivity();
+      if (id === "profile") loadProfile();
+  }
 
     function loadDashboard(){
         fetch(`${API_URL}/api/users/${userId}`)
@@ -590,6 +1057,12 @@
         showVehicleMessage("Vehicle added successfully 🎉", "success");
 
         setTimeout(() => {
+
+          const garageSection = document.getElementById("garage");
+          if(garageSection.classList.contains("active")){
+                loadGarage();
+          }
+
           closeAddVehicle();
           loadDashboard();
         }, 800);
@@ -600,16 +1073,277 @@
       }
     });
 
+    function getActivityIconClass(description) {
+      description = description.toLowerCase();
+
+      if (description.includes("welcome")) return "fa-user-check";
+      if (description.includes("added a new vehicle")) return "fa-car";
+      if (description.includes("deleted successfully")) return "fa-trash";
+      if (description.includes("delete failed")) return "fa-circle-exclamation";
+      if (description.includes("booked a service")) return "fa-screwdriver-wrench";
+      if (description.includes("failed booking")) return "fa-triangle-exclamation";
+      if (description.includes("already booked")) return "fa-clock";
+
+      return "fa-circle-info";
+    }
+
+
+    function loadActivity() {
+    fetch(`${API_URL}/api/activities/user/${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("activityList");
+        list.innerHTML = "";
+
+        if (!data || data.length === 0) {
+          list.innerHTML = `<p style="color:#9e9e9e">No activity yet</p>`;
+          return;
+        }
+
+        data.forEach(a => {
+          list.innerHTML += `
+            <div class="stat-card">
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <i class="fa-solid ${getActivityIconClass(a.description)}"></i>
+                </div>
+
+                <div class="activity-content">
+                  <span>${a.description}</span>
+                  <small style="color:#777">
+                    ${new Date(a.date).toLocaleString()}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <br/>
+          `;
+
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("activityList").innerHTML =
+          `<p style="color:#ff5c5c">Failed to load activity</p>`;
+      });
+  }
+
+
+  let originalProfile = {};
+
+function loadProfile() {
+  fetch(`${API_URL}/api/profile/${userId}`)
+    .then(res => res.json())
+    .then(d => {
+      avatar.innerText = d.username[0].toUpperCase();
+      pName.innerText = d.name || d.username;
+      pEmail.innerText = d.email;
+      pRole.innerText = d.role;
+      pUsername.innerText = d.username;
+      pPhone.innerText = d.phone || "Not added";
+    });
+}
+
+function openEditProfile() {
+  document.getElementById("editProfileBox").style.display = "block";
+}
+
+function showEditField() {
+  const option = editOption.value;
+  editInput.style.display = "block";
+  editInput.value = "";
+
+  if (option === "password") {
+    editInput.type = "password";
+    editInput.placeholder = "New password";
+  } else if (option === "phone") {
+    editInput.type = "text";
+    editInput.placeholder = "Phone number";
+  } else if (option === "name") {
+    editInput.type = "text";
+    editInput.placeholder = "Full name";
+  } else if (option === "email") {
+    editInput.type = "email";
+    editInput.placeholder = "Email";
+  } else {
+    editInput.style.display = "none";
+  }
+}
+
+function saveProfileChange() {
+  const option = editOption.value;
+  const value = editInput.value.trim();
+
+  if (!option || !value) {
+    showTopMessage("Please select a field and enter a value", "error");
+    return;
+  }
+
+  // frontend validation (matches backend)
+  if (option === "phone" && !/^\d{10}$/.test(value)) {
+    showTopMessage("Enter a valid 10-digit phone number", "error");
+    return;
+  }
+
+  if (option === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+  showTopMessage("Enter a valid email address", "error");
+  return;
+}
+
+  const payload = {
+    userId: Number(userId),
+    key: option,
+    value: value
+  };
+
+  fetch(`${API_URL}/api/profile/update`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+    .then(res => res.text())
+    .then(msg => {
+
+      // handle backend messages explicitly
+      const lowerMsg = msg.toLowerCase();
+
+      if (
+        lowerMsg.includes("cannot") ||
+        lowerMsg.includes("exists") ||
+        lowerMsg.includes("invalid") ||
+        lowerMsg.includes("enter")
+      ) {
+        showTopMessage(msg, "error");
+        return;
+      }
+
+      // success
+      showTopMessage(msg || "Profile updated successfully", "success");
+
+      editProfileBox.style.display = "none";
+      editOption.value = "";
+      editInput.value = "";
+      editInput.style.display = "none";
+
+      loadProfile();
+    })
+    .catch(() => {
+      showTopMessage("Server error while updating profile", "error");
+    });
+}
+    function openEditVehicle(vehicleId) {
+
+  // Fetch full vehicle data
+  fetch(`${API_URL}/api/vehicles/${vehicleId}`)
+    .then(res => res.json())
+    .then(v => {
+
+      // Populate form with existing values
+      document.getElementById("editVehicleId").value = v.vehicleId;
+      document.getElementById("editVehicleNumber").value = v.vehicleNumber;
+      document.getElementById("editVehicleType").value = v.vehicleType;
+      document.getElementById("editBrand").value = v.brand;
+      document.getElementById("editModel").value = v.model;
+      document.getElementById("editManufactureYear").value = v.manufactureYear;
+      document.getElementById("editFuelType").value = v.fuelType;
+
+      // Show modal
+      document.getElementById("editVehicleModal").classList.add("show");
+    });
+}
+
+function closeEditVehicle() {
+  document.getElementById("editVehicleModal").classList.remove("show");
+  document.getElementById("editVehicleForm").reset();
+}
+
+
+    document.getElementById("editVehicleForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const vehicleId = document.getElementById("editVehicleId").value;
+
+  const payload = {
+    vehicleNumber: document.getElementById("editVehicleNumber").value.trim(),
+    vehicleType: document.getElementById("editVehicleType").value,
+    brand: document.getElementById("editBrand").value.trim(),
+    model: document.getElementById("editModel").value.trim(),
+    manufactureYear: document.getElementById("editManufactureYear").value,
+    fuelType: document.getElementById("editFuelType").value
+  };
+
+  try {
+    const res = await fetch(`${API_URL}/api/vehicles/${vehicleId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const msg = await res.text();
+
+    const lowerMsg = msg.toLowerCase();
+
+    if (lowerMsg.includes("no changes")) {
+      showTopMessage(msg, "error");
+      return;
+    }
+
+    if (
+      lowerMsg.includes("cannot") ||
+      lowerMsg.includes("exists")
+    ) {
+      showTopMessage(msg, "error");
+      return;
+    }
+
+    showTopMessage(msg, "success");
+    closeEditVehicle();
+    loadGarage();
+    loadDashboard();
+
+  } catch {
+    showTopMessage("Server error while updating vehicle", "error");
+  }
+});
+
+
+
+
+
+    function showTopMessage(message, type = "success") {
+    const box = document.getElementById("topMessage");
+    box.innerText = message;
+    box.className = `top-message ${type}`;
+    box.style.display = "block";
+
+    setTimeout(() => {
+      box.style.display = "none";
+    }, 3000);
+}
+
+
+    function goBackToGarage() {
+      show("garage");
+
+      // highlight "My Garage" in sidebar
+      document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+      document.querySelectorAll(".nav-item")[1].classList.add("active");
+    }
+
+
     //this is the new line I now added
   function bookService() {
     window.location.href = `book_service.html?userId=${userId}`;
   }
 
     loadDashboard();
-  function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-  }
+      function logout() {
+        localStorage.clear();
+        window.location.href = "login.html";
+      }
+      function home(){
+        window.location.href = "home.html";
+      }
 </script>
 
 </body>
