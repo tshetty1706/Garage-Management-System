@@ -4,8 +4,8 @@ A backend-focused web application built with Spring Boot, MYSQL fro backend and 
 The project is designed to practice real-world backend concepts such as REST APIs, database relationships, validation, and frontend–backend communication — without relying on heavy frontend frameworks.
 
 📌 Project Overview
-° User registration and login (Role-based authentication)
-° Vehicle registration & management linked to users using userId
+° User registration and login (Role-based authentication) <br>
+° Vehicle registration & management linked to users using userId <br>
 ° Backend validation for avoiding duplicate entries
 ° Service booking & tracking
 ° Admin control panel operations
