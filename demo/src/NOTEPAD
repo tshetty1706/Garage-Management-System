@@ -2,11 +2,8 @@
 2 . Active Services Section (Small but Powerful)
 
     Split services into:
-
     Active Services
-
     Past Services
-
     This improves UX and backend clarity.
 
 
@@ -48,3 +45,26 @@ select the vehicle which he has(will get the vehicle list from the database) and
 
 
 <==========END OF LOGIC==========>
+
+
+
+Roles
+
+    SUPER_ADMIN (exactly 1, system-level)
+    ADMIN (many)
+
+Rules
+
+    SUPER_ADMIN exists by default in DB ✅
+    SUPER_ADMIN cannot be deleted ❌
+
+    SUPER_ADMIN can:
+
+        create ADMIN
+        delete ADMIN
+
+    ADMIN can:
+
+        create ADMIN
+        delete ADMIN
+        ❌ No one can delete SUPER_ADMIN

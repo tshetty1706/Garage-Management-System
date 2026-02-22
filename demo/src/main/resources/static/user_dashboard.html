@@ -825,22 +825,6 @@
   }
 
 
-  // Fetch username using userId
-//  fetch(`${API_URL}/api/users/${userId}`)-->
-//.then(response => {-->
-//  if (!response.ok) {-->
-//    throw new Error("Failed to fetch user");-->
-//  }-->
-//    -->
-//  })-->
-//  .then(username => {-->
-//    document.getElementById("welcomeUser").innerText = username;-->
-//  })-->
-//  .catch(err => {-->
-//    console.error(err);-->
-//    document.getElementById("welcomeUser").innerText = "User";-->
-//  });-->
-
   function loadGarage() {
   fetch(`${API_URL}/api/vehicles/user/${userId}`)
     .then(res => res.json())
@@ -916,6 +900,7 @@ function deleteVehicle(vehicleId) {
       } else {
         showTopMessage("Vehicle deleted successfully", "success");
         loadGarage();
+        loadDashboard();
       }
 
     });

@@ -204,8 +204,8 @@
             showMessage("Login successful! Redirecting...", "success");
 
             setTimeout(() => {
-                if (data.role.toUpperCase() === "ADMIN") {
-                    window.location.href = "admin.html";
+                if (data.role.toUpperCase() === "ADMIN" || data.role.toUpperCase() === "SUPER_ADMIN" ) {
+                    window.location.href = "admin_dashboard.html";
                 } else {
                     window.location.href = "user_dashboard.html";
                 }

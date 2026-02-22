@@ -213,10 +213,10 @@
           display: none;
         }
 
-        #dashboardBtn { top: 20px; right: 20px; }
+        #dashboardBtn { top: 20px; right: 60px; }
         #loginBtn     { top: 20px; right: 130px; }
         #signupBtn    { top: 20px; right: 240px; }
-
+        #homeBtn {top: 20px; right: 200px;}
 
 
     </style>
@@ -228,6 +228,7 @@
     <img src="img.png" alt="Car Service">
 
     <button id="dashboardBtn" class="dashboard-btn" onclick="goToDashboard()">Dashboard</button>
+    <button id="homeBtn" class="dashboard-btn" onclick="goToHome()">Back to Home</button>
     <button id="loginBtn" class="dashboard-btn" onclick="goToLogin()">Sign In</button>
     <button id="signupBtn" class="dashboard-btn" onclick="goToSignup()">Sign Up</button>
 
@@ -383,17 +384,21 @@
 <script>
     const API_URL = "http://localhost:8081";
     const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("role");
+    console.log(role);
     const isLoggedIn = !!userId;
 
     const dashboardBtn = document.getElementById("dashboardBtn");
     const loginBtn = document.getElementById("loginBtn");
     const signupBtn = document.getElementById("signupBtn");
+    const homeBtn = document.getElementById("homeBtn");
     const bookBtn = document.getElementById("bookServiceBtn");
 
 
     window.addEventListener("DOMContentLoaded", () => {
       if (isLoggedIn) {
         dashboardBtn.style.display = "block";
+        homeBtn.style.display = "block";
         loginBtn.style.display = "none";
         signupBtn.style.display = "none";
         loadUserVehicles();
@@ -401,6 +406,7 @@
         dashboardBtn.style.display = "none";
         loginBtn.style.display = "block";
         signupBtn.style.display = "block";
+        homeBtn.style.display = "none";
         bookBtn.style.opacity = "0.6";
         vehicleSelect.disabled = true;
         vehicleSelect.style.opacity = "0.6";
@@ -579,6 +585,11 @@
       window.location.href = "signup.html";
     }
 
+    function goToHome() {
+      window.location.href = "home.html";
+    }
+
+
 
     window.addEventListener("DOMContentLoaded", () => {
       if (isLoggedIn) {
@@ -594,9 +605,13 @@
     }
 
     function goToDashboard() {
-      window.location.href = "user_dashboard.html";
+      if(role.toUpperCase() === "SUPER_ADMIN" || role.toUpperCase() === "SUPER_ADMIN" ){
+            window.location.href = "admin_dashboard.html";
+      }
+      else{
+        window.location.href = "user_dashboard.html";
     }
-
+    }
 </script>
 
 </body>

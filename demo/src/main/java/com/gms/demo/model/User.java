@@ -38,5 +38,5 @@ public class User {
 //user table(customer + admin)
 //signin will ask for (Full Name,Username,Email,Password)
 //login will ask for (username,password) -> role == customer -> user_dashboard.html
-//                                       -> role == admin -> admin.html
+//                                       -> role == admin -> admin_dashboard.html
 //

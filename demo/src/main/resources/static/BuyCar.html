@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Used Cars | GMS</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body:#121212;
+            --bg-card:#1e1e1e;
+            --primary:#f97316;
+            --primary-hover:#ea580c;
+            --border:#2e2e2e;
+            --text-main:#ffffff;
+            --text-muted:#a1a1aa;
+            --radius:10px;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Inter',sans-serif;
+        }
+
+        body{
+            background:var(--bg-body);
+            color:var(--text-main);
+            padding:40px;
+        }
+
+        .header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:40px;
+        }
+
+        .title{
+            font-size:28px;
+            font-weight:600;
+        }
+
+        .home-btn{
+            background:var(--primary);
+            border:none;
+            padding:10px 18px;
+            border-radius:var(--radius);
+            color:white;
+            cursor:pointer;
+            font-weight:500;
+            transition:0.2s;
+        }
+
+        .home-btn:hover{
+            background:var(--primary-hover);
+        }
+
+        .cards-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:25px;
+        }
+
+        .car-card{
+            background:var(--bg-card);
+            border:1px solid var(--border);
+            border-radius:var(--radius);
+            padding:20px;
+            transition:0.3s;
+        }
+
+        .car-card:hover{
+            border-color:var(--primary);
+            transform:translateY(-4px);
+        }
+
+        .car-title{
+            font-size:18px;
+            font-weight:600;
+            margin-bottom:10px;
+        }
+
+        .car-info{
+            color:var(--text-muted);
+            margin-bottom:6px;
+            font-size:14px;
+        }
+
+        .contact-btn{
+            width:100%;
+            margin-top:15px;
+            background:var(--primary);
+            border:none;
+            padding:10px;
+            border-radius:var(--radius);
+            color:white;
+            cursor:pointer;
+            font-weight:500;
+        }
+
+        .contact-btn:hover{
+            background:var(--primary-hover);
+        }
+
+        .empty{
+            text-align:center;
+            color:var(--text-muted);
+            margin-top:50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="title">Available Sales Vehicles</div>
+    <button class="home-btn" onclick="goHome()">← Back to Home</button>
+</div>
+
+<div id="carsContainer" class="cards-grid"></div>
+
+<script>
+
+    const API_URL = "http://localhost:8081";
+
+    function goHome(){
+        window.location.href = "home.html";
+    }
+
+    function loadCars(){
+
+        fetch(`${API_URL}/api/admin/sales`)
+        .then(res => res.json())
+        .then(data => renderCars(data))
+        .catch(err => {
+            console.error("Error loading cars:",err);
+            document.getElementById("carsContainer").innerHTML =
+            "<div class='empty'>Failed to load vehicles</div>";
+        });
+
+    }
+
+    function renderCars(data){
+
+    const container = document.getElementById("carsContainer");
+    container.innerHTML = "";
+
+    if(!data || data.length === 0){
+        container.innerHTML =
+        "<div class='empty'>No vehicles available right now</div>";
+        return;
+    }
+
+    data.forEach(vehicle => {
+
+        const card = `
+        <div class="car-card">
+
+            <div class="car-title">
+                ${vehicle.brand} ${vehicle.model}
+            </div>
+
+            <div class="car-info">Year: ${vehicle.manufactureYear}</div>
+            <div class="car-info">Fuel: ${vehicle.fuelType}</div>
+            <div class="car-info">Type: ${vehicle.vehicleType}</div>
+
+            <div class="car-info"
+                 style="margin-top:12px;
+                        padding-top:10px;
+                        border-top:1px solid #2e2e2e;
+                        font-weight:500;
+                        color:#f97316;">
+                Owner Contact: ${vehicle.phone}
+            </div>
+
+        </div>
+        `;
+
+        container.innerHTML += card;
+    });
+}
+
+    window.onload = loadCars;
+
+</script>
+
+</body>
+</html>
