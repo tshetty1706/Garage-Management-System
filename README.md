@@ -27,7 +27,6 @@ The system supports two main roles:<br>
   -> Real-time success/error messaging<br>
   -> Profile management <br>
   -> Personal Activity Log tracking all actions<br>
-  ![Go Garage Home Page](./demo/src/main/resources/static/HOME.png)
   
 
 🛠️ Admin Features
