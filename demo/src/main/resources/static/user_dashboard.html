@@ -504,6 +504,93 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+
+      /* ===== HERO BANNER ===== */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      flex-shrink: 0;
+      margin:0;
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+      filter: brightness(0.55) saturate(0.85);
+      transition: transform 8s ease;
+    }
+
+    .hero-banner:hover img {
+      transform: scale(1.03);
+    }
+
+    /* layered gradient: dark bottom fade + left vignette + subtle orange tint */
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.92) 100%),
+        linear-gradient(to right, rgba(10,10,10,0.5) 0%, transparent 40%),
+        linear-gradient(160deg, rgba(255,152,0,0.06) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* text overlay on the banner */
+    .hero-text {
+      position: absolute;
+      bottom: 22px;
+      left: 36px;
+      z-index: 2;
+    }
+
+    .hero-text .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,152,0,0.15);
+      border: 1px solid rgba(255,152,0,0.35);
+      color: #ff9800;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .hero-text h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-text h2 span {
+      color: #ff9800;
+    }
+
+    .hero-text p {
+      color: rgba(255,255,255,0.55);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+      .main2{
+        display: flex;
+  flex-direction: column;
+  width:1400px
+      }
+
   </style>
 </head>
 
@@ -543,276 +630,292 @@
 </div>
 
 <!-- MAIN -->
-<div class="main">
-  <div id="topMessage" class="top-message"></div>
-
-  <!-- DASHBOARD -->
-  <div id="dashboard" class="section active">
-    <div class="header header-column">
-      <h1 class="welcome" >
-        Welcome back,<span id="welcomeUser" class="username">User</span>
-      </h1>
-      <p class="subtitle">Here’s what’s happening with your vehicles</p>
-    </div>
-
-      <div class="stats">
-          <div class="stat-card">
-              <i class="fa-solid fa-clipboard-list" style="color: #FFA500;"></i>
-              <h4>Active Services</h4>
-              <strong id="activeServices">—</strong>
-          </div>
-          <div class="stat-card">
-              <i class="fa-solid fa-car-side" style="color: #FFA500;"></i>
-              <h4>My Vehicles</h4>
-              <strong id="vehicleCount">—</strong>
-          </div>
-          <div class="stat-card">
-              <i class="fa-solid fa-screwdriver-wrench" style="color: #FFA500;"></i>
-              <h4>Last Service</h4>
-              <strong id="lastService">—</strong>
-          </div>
-      </div>
-
-    <div class="actions">
-      <button class="action-btn" onclick="bookService()">
-        <i class="fa-regular fa-calendar-check"></i>
-        Book a New Service
-      </button>
-      <button class="action-btn" onclick="openAddVehicle()">
-        <i class="fa-solid fa-plus"></i>
-        Add Vehicle
-      </button>
-    </div>
-
-
-  </div>
-
-  <!-- GARAGE -->
-  <div id="garage" class="section">
-    <div class="header">
-      <i class="fa-solid fa-car"></i>
-      <h1>My Vehicles</h1>
-    </div>
-
-    <div id="garageGrid" class="vehicle-grid"></div>
-  </div>
-
-
-
-
-  <!-- ADD VEHICLE MODAL -->
-  <div id="addVehicleModal" class="modal">
-    <div class="modal-content">
-      <h3>Add Vehicle</h3>
-
-      <div id="vehicleMessage" class="form-message"></div>
-
-      <form id="addVehicleForm">
-        <input type="text" id="vehicleNumber" placeholder="Vehicle Number" required />
-
-        <select id="vehicleType" required>
-          <option value="">Vehicle Type</option>
-          <option value="CAR">Car</option>
-          <option value="BIKE">Bike</option>
-        </select>
-
-        <input type="text" id="brand" placeholder="Brand" required />
-        <input type="text" id="model" placeholder="Model" required />
-
-        <input type="number" id="manufactureYear" placeholder="Manufacture Year (e.g. 2020)" min="1980" max="2026" required/>
-
-        <select id="fuelType" required>
-          <option value="">Fuel Type</option>
-          <option value="PETROL">Petrol</option>
-          <option value="DIESEL">Diesel</option>
-          <option value="ELECTRIC">Electric</option>
-          <option value="CNG">CNG</option>
-        </select>
-
-        <div class="modal-actions">
-          <button type="button" onclick="closeAddVehicle()">Cancel</button>
-          <button type="submit">Save Vehicle</button>
+<div class = "main2">
+    <div class="hero-banner">
+        <img src="./img_1.png" alt="Garage" />
+        <div class="hero-text">
+            <div class="badge">
+                <i class="fa-solid fa-wrench"></i>
+                Go Garage Management System
+            </div>
+            <h2>Your Garage, <span>Your Rules</span></h2>
+            <p>Track services, manage vehicles, stay in control.</p>
         </div>
-      </form>
+        <div class="hero-accent"></div>
     </div>
-  </div>
+    <div class="main">
+        <!-- ===== HERO BANNER ===== -->
 
-  <div id="serviceHistory" class="section">
-    <div class="header" style="display:flex;align-items:center;gap:14px;">
+        <div id="topMessage" class="top-message"></div>
 
-      <!-- BACK BUTTON -->
-      <button class="back-btn" onclick="goBackToGarage()">
-        ← Back
-      </button>
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="section active">
+            <div class="header header-column">
+                <h1 class="welcome" >
+                    Welcome back,<span id="welcomeUser" class="username">User</span>
+                </h1>
+                <p class="subtitle">Here’s what’s happening with your vehicles</p>
+            </div>
 
-      <div>
-        <h1>Service History</h1>
-        <span id="historyVehicle"></span>
-      </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fa-solid fa-clipboard-list" style="color: #FFA500;"></i>
+                    <h4>Active Services</h4>
+                    <strong id="activeServices">—</strong>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-car-side" style="color: #FFA500;"></i>
+                    <h4>My Vehicles</h4>
+                    <strong id="vehicleCount">—</strong>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-screwdriver-wrench" style="color: #FFA500;"></i>
+                    <h4>Last Service</h4>
+                    <strong id="lastService">—</strong>
+                </div>
+            </div>
 
-    </div>
+            <div class="actions">
+                <button class="action-btn" onclick="bookService()">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    Book a New Service
+                </button>
+                <button class="action-btn" onclick="openAddVehicle()">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Vehicle
+                </button>
+            </div>
 
-    <div id="historyList"></div>
-  </div>
 
-
-  <div id="activity" class="section">
-      <div class="header">
-        <i class="fa-solid fa-chart-line"></i>
-        <h1>Activity</h1>
-      </div>
-      <div class="header">
-        <span>Your recent actions and updates</span>
-      </div>
-      <br/>
-      <div id="activityList"></div>
-  </div>
-
-  <!-- EDIT VEHICLE MODAL -->
-  <div id="editVehicleModal" class="modal">
-    <div class="modal-content">
-      <h3>Edit Vehicle</h3>
-
-      <!-- Message box -->
-      <div id="editVehicleMessage" class="form-message"></div>
-
-      <form id="editVehicleForm">
-
-        <!-- Vehicle ID is hidden (PRIMARY KEY – must never be editable) -->
-        <input type="hidden" id="editVehicleId" />
-
-        <!-- Vehicle Number
-             Editable because users often enter wrong registration -->
-        <input
-                type="text"
-                id="editVehicleNumber"
-                placeholder="Vehicle Number"
-                required
-        />
-
-        <!-- Vehicle Type
-             Editable because user may have selected wrong type initially -->
-        <select id="editVehicleType" required>
-          <option value="">Vehicle Type</option>
-          <option value="CAR">Car</option>
-          <option value="BIKE">Bike</option>
-        </select>
-
-        <!-- Brand
-             Editable to fix typos or incomplete brand names -->
-        <input
-                type="text"
-                id="editBrand"
-                placeholder="Brand"
-                required
-        />
-
-        <!-- Model
-             Editable to update model variant or correct spelling -->
-        <input
-                type="text"
-                id="editModel"
-                placeholder="Model"
-                required
-        />
-
-        <!-- Manufacture Year
-             Editable for data correction -->
-        <input
-                type="number"
-                id="editManufactureYear"
-                placeholder="Manufacture Year"
-                min="1980"
-                max="2026"
-                required
-        />
-
-        <!-- Fuel Type
-             Editable because users frequently select wrong fuel -->
-        <select id="editFuelType" required>
-          <option value="">Fuel Type</option>
-          <option value="PETROL">Petrol</option>
-          <option value="DIESEL">Diesel</option>
-          <option value="ELECTRIC">Electric</option>
-          <option value="CNG">CNG</option>
-        </select>
-
-        <div class="modal-actions">
-          <button type="button" onclick="closeEditVehicle()">Cancel</button>
-          <button type="submit">Update</button>
         </div>
-      </form>
-    </div>
-  </div>
+
+        <!-- GARAGE -->
+        <div id="garage" class="section">
+            <div class="header">
+                <i class="fa-solid fa-car"></i>
+                <h1>My Vehicles</h1>
+            </div>
+
+            <div id="garageGrid" class="vehicle-grid"></div>
+        </div>
 
 
-  <!-- PROFILE -->
-  <div id="profile" class="section">
-    <div class="header">
-      <i class="fa-regular fa-user"></i>
-      <h1>Profile</h1>
-    </div>
-    <div class="header">
-      <span>Your account information</span>
-    </div>
-    <br/>
 
-    <div class="stat-card" style="max-width:720px">
 
-      <!-- Overview -->
-      <div style="display:flex;gap:20px;align-items:center">
-        <div id="avatar"
-             style="width:64px;height:64px;border-radius:50%;
+        <!-- ADD VEHICLE MODAL -->
+        <div id="addVehicleModal" class="modal">
+            <div class="modal-content">
+                <h3>Add Vehicle</h3>
+
+                <div id="vehicleMessage" class="form-message"></div>
+
+                <form id="addVehicleForm">
+                    <input type="text" id="vehicleNumber" placeholder="Vehicle Number" required />
+
+                    <select id="vehicleType" required>
+                        <option value="">Vehicle Type</option>
+                        <option value="CAR">Car</option>
+                        <option value="BIKE">Bike</option>
+                    </select>
+
+                    <input type="text" id="brand" placeholder="Brand" required />
+                    <input type="text" id="model" placeholder="Model" required />
+
+                    <input type="number" id="manufactureYear" placeholder="Manufacture Year (e.g. 2020)" min="1980" max="2026" required/>
+
+                    <select id="fuelType" required>
+                        <option value="">Fuel Type</option>
+                        <option value="PETROL">Petrol</option>
+                        <option value="DIESEL">Diesel</option>
+                        <option value="ELECTRIC">Electric</option>
+                        <option value="CNG">CNG</option>
+                    </select>
+
+                    <div class="modal-actions">
+                        <button type="button" onclick="closeAddVehicle()">Cancel</button>
+                        <button type="submit">Save Vehicle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="serviceHistory" class="section">
+            <div class="header" style="display:flex;align-items:center;gap:14px;">
+
+                <!-- BACK BUTTON -->
+                <button class="back-btn" onclick="goBackToGarage()">
+                    ← Back
+                </button>
+
+                <div>
+                    <h1>Service History</h1>
+                    <span id="historyVehicle"></span>
+                </div>
+
+            </div>
+
+            <div id="historyList"></div>
+        </div>
+
+
+        <div id="activity" class="section">
+            <div class="header">
+                <i class="fa-solid fa-chart-line"></i>
+                <h1>Activity</h1>
+            </div>
+            <div class="header">
+                <span>Your recent actions and updates</span>
+            </div>
+            <br/>
+            <div id="activityList"></div>
+        </div>
+
+        <!-- EDIT VEHICLE MODAL -->
+        <div id="editVehicleModal" class="modal">
+            <div class="modal-content">
+                <h3>Edit Vehicle</h3>
+
+                <!-- Message box -->
+                <div id="editVehicleMessage" class="form-message"></div>
+
+                <form id="editVehicleForm">
+
+                    <!-- Vehicle ID is hidden (PRIMARY KEY – must never be editable) -->
+                    <input type="hidden" id="editVehicleId" />
+
+                    <!-- Vehicle Number
+                         Editable because users often enter wrong registration -->
+                    <input
+                            type="text"
+                            id="editVehicleNumber"
+                            placeholder="Vehicle Number"
+                            required
+                    />
+
+                    <!-- Vehicle Type
+                         Editable because user may have selected wrong type initially -->
+                    <select id="editVehicleType" required>
+                        <option value="">Vehicle Type</option>
+                        <option value="CAR">Car</option>
+                        <option value="BIKE">Bike</option>
+                    </select>
+
+                    <!-- Brand
+                         Editable to fix typos or incomplete brand names -->
+                    <input
+                            type="text"
+                            id="editBrand"
+                            placeholder="Brand"
+                            required
+                    />
+
+                    <!-- Model
+                         Editable to update model variant or correct spelling -->
+                    <input
+                            type="text"
+                            id="editModel"
+                            placeholder="Model"
+                            required
+                    />
+
+                    <!-- Manufacture Year
+                         Editable for data correction -->
+                    <input
+                            type="number"
+                            id="editManufactureYear"
+                            placeholder="Manufacture Year"
+                            min="1980"
+                            max="2026"
+                            required
+                    />
+
+                    <!-- Fuel Type
+                         Editable because users frequently select wrong fuel -->
+                    <select id="editFuelType" required>
+                        <option value="">Fuel Type</option>
+                        <option value="PETROL">Petrol</option>
+                        <option value="DIESEL">Diesel</option>
+                        <option value="ELECTRIC">Electric</option>
+                        <option value="CNG">CNG</option>
+                    </select>
+
+                    <div class="modal-actions">
+                        <button type="button" onclick="closeEditVehicle()">Cancel</button>
+                        <button type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- PROFILE -->
+        <div id="profile" class="section">
+            <div class="header">
+                <i class="fa-regular fa-user"></i>
+                <h1>Profile</h1>
+            </div>
+            <div class="header">
+                <span>Your account information</span>
+            </div>
+            <br/>
+
+            <div class="stat-card" style="max-width:720px">
+
+                <!-- Overview -->
+                <div style="display:flex;gap:20px;align-items:center">
+                    <div id="avatar"
+                         style="width:64px;height:64px;border-radius:50%;
            background:#ff9800;color:#111;
            display:flex;align-items:center;justify-content:center;
            font-size:22px;font-weight:700;">
-          U
+                        U
+                    </div>
+
+                    <div>
+                        <strong id="pName">—</strong><br/>
+                        <span id="pEmail" style="color:#9e9e9e">—</span><br/>
+                        <small id="pRole" style="color:#777">—</small>
+                    </div>
+                </div>
+
+                <hr style="border:0;border-top:1px solid #2a2a2a;margin:20px 0"/>
+
+                <!-- Info -->
+                <p><strong>Username:</strong> <span id="pUsername">—</span></p>
+                <p><strong>Phone:</strong> <span id="pPhone">Not added</span></p>
+
+                <button class="action-btn" style="margin-top:20px"
+                        onclick="openEditProfile()">
+                    <i class="fa-solid fa-pen"></i> Edit Profile
+                </button>
+            </div>
+
+            <!-- EDIT OPTIONS -->
+            <div id="editProfileBox"
+                 class="stat-card"
+                 style="max-width:720px;margin-top:20px;display:none">
+
+                <h4 style="margin-bottom:14px">Update Profile</h4>
+
+                <select id="editOption" onchange="showEditField()">
+                    <option value="">Select what to update</option>
+                    <option value="name">Name</option>
+                    <option value="phone">Phone Number</option>
+                    <option value="password">Password</option>
+                    <option value="email">Email</option>
+                </select>
+
+                <input id="editInput" style="display:none" />
+                <button class="action-btn" style="margin-top:14px"
+                        onclick="saveProfileChange()">
+                    Save
+                </button>
+            </div>
         </div>
 
-        <div>
-          <strong id="pName">—</strong><br/>
-          <span id="pEmail" style="color:#9e9e9e">—</span><br/>
-          <small id="pRole" style="color:#777">—</small>
-        </div>
-      </div>
 
-      <hr style="border:0;border-top:1px solid #2a2a2a;margin:20px 0"/>
 
-      <!-- Info -->
-      <p><strong>Username:</strong> <span id="pUsername">—</span></p>
-      <p><strong>Phone:</strong> <span id="pPhone">Not added</span></p>
-
-      <button class="action-btn" style="margin-top:20px"
-              onclick="openEditProfile()">
-        <i class="fa-solid fa-pen"></i> Edit Profile
-      </button>
     </div>
-
-    <!-- EDIT OPTIONS -->
-    <div id="editProfileBox"
-         class="stat-card"
-         style="max-width:720px;margin-top:20px;display:none">
-
-      <h4 style="margin-bottom:14px">Update Profile</h4>
-
-      <select id="editOption" onchange="showEditField()">
-        <option value="">Select what to update</option>
-        <option value="name">Name</option>
-        <option value="phone">Phone Number</option>
-        <option value="password">Password</option>
-        <option value="email">Email</option>
-      </select>
-
-      <input id="editInput" style="display:none" />
-      <button class="action-btn" style="margin-top:14px"
-              onclick="saveProfileChange()">
-        Save
-      </button>
-    </div>
-  </div>
-
-
-
 </div>
 <script>
   const API_URL = 'http://localhost:8081';

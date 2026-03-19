@@ -28,39 +28,51 @@
             flex-wrap: wrap
         }
 
-        .logo {
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size: 28px;
-            font-weight: 1000;
-            color: #ff9800;
-            letter-spacing:0.5px;
-        }
+        /* Updated Logo Container */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Space between icon and text */
+    text-decoration: none;
+}
 
+/* Updated Icon Styling */
+.logo-icon {
+    background: #1a1a1a; /* Dark background for the icon square */
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+}
 
-        .logo-icon {
-            position: relative;
-            width: 34px;
-            height: 34px;
-        }
+.logo-icon i {
+    font-size: 22px;
+    color: #ff9800; /* Matching your orange theme */
+}
 
-        /* gear */
-        .logo-icon .gear {
-            font-size: 38px;
-            color: #ff9800;
-        }
+/* Wordmark logic */
+.logo-wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1; /* Tightens the vertical stack */
+}
 
-        /* wrench */
-        .logo-icon .wrench {
-            position: absolute;
-            font-size: 34px;
-            color: white;
-            left: 9px;
-            top: 9px;
-            transform: rotate(-84deg);
-        }
+.logo-wordmark .w-go {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
+.logo-wordmark .w-garage {
+    font-size: 22px;
+    font-weight: 900;
+    color: #ff9800;
+    margin-top: -2px;
+}
         .nav-links {
             list-style: none;
             display: flex;
@@ -366,6 +378,8 @@
             }
         }
 
+
+
     </style>
 </head>
 <body>
@@ -373,11 +387,13 @@
 <!-- NAVBAR -->
 <nav class="navbar">
     <div class="logo">
-        <span class="logo-icon">
-            <i class="fa-solid fa-gear gear"></i>
-            <i class="fa-solid fa-wrench wrench"></i>
-        </span>
-        Go Garage
+        <div class="logo-icon">
+            <i class="fa-solid fa-car"></i>
+        </div>
+        <div class="logo-wordmark">
+            <span class="w-go">Go</span>
+            <span class="w-garage">Garage</span>
+        </div>
     </div>
     <ul class="nav-links">
         <li><a href="#">Home</a></li>
